@@ -1,0 +1,30 @@
+{
+  "include": [
+    "src/*.ts", "src/view/chessboardlayer.ts", "src/view/chesspieceentity.ts", "src/view/chessboardviewconfig.ts"
+  ],
+  "filesGlob": [
+    "src/*.ts"
+  ],
+  "exclude": [],
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "outDir": "./",
+    "declaration": true,
+    "removeComments": true,
+    "noEmitOnError": false,
+    "noUnusedLocals": false, // turn on before deploying to prod
+    "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "strict": true,
+    "strictNullChecks": true,
+    "alwaysStrict": true,
+    "target": "es2015",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "inlineSourceMap": true,
+    "inlineSources": true
+  }
+}

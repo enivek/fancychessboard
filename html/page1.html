@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/konva@4.0.17/konva.js"></script>
+    <script src="../dist/app.js"></script>
+    <script>
+        var fcb = null;
+        function afterImagesLoaded() {
+            fcb.fen();
+        }
+        function init() {
+            fcb = FancyChessBoard.initialize("demoCanvas", "http://172.17.93.225:8080/fancychessboard/assets/", afterImagesLoaded);
+        }
+    </script>
+</head>
+<body onload="init();">
+    <div id="demoCanvas"></div>
+</body>
+</html>

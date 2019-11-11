@@ -1,2 +1,2 @@
 # fancychessboard
-A fancy JavaScript chessboard based on Phaser.io
+A fancy JavaScript chessboard based on Konva.
