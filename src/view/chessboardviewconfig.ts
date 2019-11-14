@@ -11,23 +11,12 @@ export class ChessBoardViewConfig implements Konva.ContainerConfig {
     private _containerObject: HTMLElement;
 
     constructor( containerId: string ) {
-
         this.container = containerId;
         this._containerObject = (<HTMLElement>document.getElementById(containerId));
-
-        // this.width = this.getAbsoluteSize();
-        // this.height = this.getAbsoluteSize();
-
     }
 
     public getAbsoluteSize(): number {
         let containerWidth = this._containerObject.offsetWidth;
-        // let containerHeight = this._containerObject.offsetHeight;
-        // if ( containerHeight < 10 ) {
-        //     return containerWidth;
-        // }
-        // let size = containerWidth < containerHeight ? containerWidth : containerHeight;
-        // console.log("Absolute size: " + size);
         return containerWidth;
     }
 

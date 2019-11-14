@@ -3,7 +3,7 @@ import { ImageLoader } from "./imageloader";
 
 export class ChessBoardLayer extends Konva.Layer {
 
-    public drawIt(): void {
+    public addBackgroundImage(): void {
         let imageProperty = {
             draggable: false,
             height: 640,

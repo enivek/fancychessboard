@@ -1,8 +1,11 @@
 import { IWindow } from "./iwindow";
 import { Settings } from "./view/settings";
-import { Color, Piece } from "./constants";
+import { Color, Piece, Row } from "./constants";
 import { ImageLoader } from "./view/imageloader";
 import { ChessBoardView } from "./view/chessboardview";
+import { ChessBoard } from "./model/chessboard";
+import { ChessPiece } from "./model/chesspiece";
+import Coordinate from "./model/coordinate";
 
 export class FancyChessBoard {
     private static _listOfInstances: { [key: string]: any; } = {};
@@ -26,7 +29,10 @@ export class FancyChessBoard {
     }
 
     public fen(): void {
-        this._chessBoardView.draw();
+        let chessBoard = new ChessBoard();
+        let knight = new ChessPiece(Color.White, Piece.King, new Coordinate("H", 8));
+        chessBoard.listOfPieces.push(knight);
+        this._chessBoardView.draw(chessBoard);
     }
 
     public responsiveResize(): void {

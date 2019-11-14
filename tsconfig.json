@@ -1,6 +1,6 @@
 {
   "include": [
-    "src/*.ts", "src/view/chessboardlayer.ts", "src/view/chesspieceentity.ts", "src/view/chessboardviewconfig.ts"
+    "src/*.ts", "src/view/chessboardlayer.ts", "src/view/chesspieceview.ts", "src/view/chessboardviewconfig.ts"
   ],
   "filesGlob": [
     "src/*.ts"
@@ -20,6 +20,7 @@
     "noImplicitThis": true,
     "strict": true,
     "strictNullChecks": true,
+    "strictPropertyInitialization": false,
     "alwaysStrict": true,
     "target": "es2015",
     "module": "commonjs",

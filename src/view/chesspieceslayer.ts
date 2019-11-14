@@ -1,10 +1,10 @@
 import Konva from "konva";
 import ChessBoardConfig from "./chessboardviewconfig";
-import ChessPiece from "./chesspieceentity";
+import ChessPieceView from "./chesspieceview";
 
 export class ChessPiecesLayer extends Konva.Layer {
 
-    public addPiece(piece: ChessPiece): void {
+    public addPiece(piece: ChessPieceView): void {
         this.add(piece.image);
     }
 
