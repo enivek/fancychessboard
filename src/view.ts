@@ -1,13 +1,9 @@
 import Konva from "konva";
-import { ChessBoardViewConfig } from "./chessboardviewconfig";
-import { ChessBoardLayer } from "./chessboardlayer";
-import { ChessPiecesLayer } from "./chesspieceslayer";
-import { ChessPieceView } from "./chesspieceview";
-import { Color, Piece, Row } from "../constants";
-import { ChessBoard } from "../model/chessboard";
-import { ChessPiece } from "../model/chesspiece";
-import { Coordinate } from "../model/coordinate";
-import { Point } from "./point";
+import { ChessBoardViewConfig } from "./config";
+import { ChessBoardLayer, ChessPiecesLayer } from "./layer";
+import { ChessPiece, ChessBoard } from "./model";
+import { Coordinate, Point } from "./common";
+import { ImageLoader } from "./imageloader";
 
 export class ChessBoardView {
 
@@ -27,6 +23,11 @@ export class ChessBoardView {
         this._stage.on("dragend", function(_event) {
             let target = _event.target;
             self.snapChessPieceToBoard(target);
+        });
+
+        this._stage.on("click", function(_event) {
+            let target = _event.target;
+            console.log("Clicked: " + target);
         });
 
     }
@@ -80,7 +81,7 @@ export class ChessBoardView {
     }
 
     private convertCoordinateToPoint(coordinate: Coordinate): Point {
-        let rowInt = (coordinate.row.charCodeAt(0) - 65);
+        let rowInt = (coordinate.row.charCodeAt(0) - 97);
         let colInt = 8 - coordinate.col;
         let rowConvert = rowInt * 80;
         let colConvert = colInt * 80;
@@ -91,7 +92,7 @@ export class ChessBoardView {
         let width = this._config.getSize();
         let scale = width / ChessBoardViewConfig.canvasSize;
 
-        let r = Math.round((point.x / scale) / 80) + 65;
+        let r = Math.round((point.x / scale) / 80) + 97;
         let c = 8 - Math.round((point.y / scale) / 80);
         let rowConvert = String.fromCharCode(r);
         let colConvert = c;
@@ -112,4 +113,37 @@ export class ChessBoardView {
 
 }
 
-export default ChessBoardView;
+export class ChessPieceView {
+
+    private _konvaImage: any;
+    private _chessPiece: ChessPiece;
+
+    constructor(chessPiece: ChessPiece) {
+        this._chessPiece = chessPiece;
+        let name = this._chessPiece.getName();
+        let imageProperty = {
+            draggable: true,
+            height: 80,
+            image: ImageLoader.getImage(name),
+            width: 80,
+            x: 0,
+            y: 0
+        };
+        this._konvaImage = new Konva.Image(imageProperty);
+        this._konvaImage.setName(chessPiece.id);
+    }
+
+    get chessPiece() {
+        return this._chessPiece;
+    }
+
+    get image() {
+        return this._konvaImage;
+    }
+
+    public setPosition(position: Point) {
+        this._konvaImage.position( {x: position.x, y: position.y} );
+    }
+
+}
+

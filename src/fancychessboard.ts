@@ -1,19 +1,21 @@
 import { IWindow } from "./iwindow";
-import { Settings } from "./view/settings";
 import { Color, Piece, Row } from "./constants";
-import { ImageLoader } from "./view/imageloader";
-import { ChessBoardView } from "./view/chessboardview";
-import { ChessBoard } from "./model/chessboard";
-import { ChessPiece } from "./model/chesspiece";
-import Coordinate from "./model/coordinate";
+import { ImageLoader } from "./imageloader";
+import { ChessBoardView } from "./view";
+import { ChessBoard, ChessPiece } from "./model";
+import { Coordinate } from "./common";
+import { FancyChessBoardConfig } from "./config";
+import { Logic } from "./logic";
 
 export class FancyChessBoard {
+
     private static _listOfInstances: { [key: string]: any; } = {};
 
     private readonly _colors: Array<Color> = [ Color.White, Color.Black ];
     private readonly _pieces: Array<Piece> = [ Piece.Bishop, Piece.King, Piece.Knight, Piece.Pawn, Piece.Queen, Piece.Rook ];
     private readonly _chessBoardView: ChessBoardView;
-    private _settings: Settings = new Settings();
+    private readonly _config: FancyChessBoardConfig;
+    private _logic: Logic;
 
     public static windowReized(): void {
         for ( let containerId of Object.keys(FancyChessBoard._listOfInstances) ) {
@@ -22,16 +24,15 @@ export class FancyChessBoard {
         }
     }
 
-    public static initialize( containerId: string, assetsHost: string, callBack: Function ): FancyChessBoard {
-        let fancyChessBoard = new FancyChessBoard(containerId, assetsHost, callBack);
-        FancyChessBoard._listOfInstances[containerId] = fancyChessBoard;
+    public static initialize( config: FancyChessBoardConfig ): FancyChessBoard {
+        let fancyChessBoard = new FancyChessBoard(config);
+        FancyChessBoard._listOfInstances[config.containerId] = fancyChessBoard;
         return fancyChessBoard;
     }
 
-    public fen(): void {
-        let chessBoard = new ChessBoard();
-        let knight = new ChessPiece(Color.White, Piece.King, new Coordinate("H", 8));
-        chessBoard.listOfPieces.push(knight);
+    public fen( fen: string ): void {
+        this._logic = new Logic();
+        let chessBoard = this._logic.convertFenToChessBoard(fen);
         this._chessBoardView.draw(chessBoard);
     }
 
@@ -39,12 +40,12 @@ export class FancyChessBoard {
         this._chessBoardView.responsiveResize();
     }
 
-    private constructor( containerId: string, assetsRoot: string, callBack: Function ) {
-        this._settings.assetRoot = assetsRoot;
-        this._chessBoardView = new ChessBoardView(containerId);
+    private constructor( config: FancyChessBoardConfig ) {
+        this._config = config;
+        this._chessBoardView = new ChessBoardView(config.containerId);
         this.loadAllPieces().then((_result) => {
-            if (callBack) {
-                callBack();
+            if (config.onAssetsLoaded) {
+                config.onAssetsLoaded();
             }
         });
     }
@@ -57,7 +58,7 @@ export class FancyChessBoard {
 
     private _setChessBoardToLoad(): void {
         let theme = "wood";
-        let imagePath = this._settings.assetRoot + "/chessboards/" + theme + ".png";
+        let imagePath = this._config.assetRoot + "/chessboards/" + theme + ".png";
         ImageLoader.setImageToLoad("chessboard", imagePath);
     }
 
@@ -67,7 +68,7 @@ export class FancyChessBoard {
                 let color = this._colors[i];
                 let piece = this._pieces[j];
                 let name = color + piece;
-                let imagePath = this._settings.assetRoot + "/pieces/wikipedia/" + name + ".png";
+                let imagePath = this._config.assetRoot + "/pieces/wikipedia/" + name + ".png";
                 ImageLoader.setImageToLoad(name, imagePath);
             }
         }
@@ -83,4 +84,5 @@ export default FancyChessBoard;
 
 let wnd = <IWindow><any>window;
 wnd.FancyChessBoard = FancyChessBoard;
+wnd.FancyChessBoardConfig = FancyChessBoardConfig;
 window.addEventListener("resize", FancyChessBoard.windowReized);

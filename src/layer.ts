@@ -1,5 +1,6 @@
 import Konva from "konva";
 import { ImageLoader } from "./imageloader";
+import { ChessPieceView } from "./view";
 
 export class ChessBoardLayer extends Konva.Layer {
 
@@ -18,4 +19,10 @@ export class ChessBoardLayer extends Konva.Layer {
 
 }
 
-export default ChessBoardLayer;
+export class ChessPiecesLayer extends Konva.Layer {
+
+    public addPiece(piece: ChessPieceView): void {
+        this.add(piece.image);
+    }
+
+}

@@ -1,6 +1,6 @@
 {
   "include": [
-    "src/*.ts", "src/view/chessboardlayer.ts", "src/view/chesspieceview.ts", "src/view/chessboardviewconfig.ts"
+    "src/*.ts", "src/view/chessboardlayer.ts", "src/view/chesspieceview.ts", "src/chessboardviewconfig.ts"
   ],
   "filesGlob": [
     "src/*.ts"

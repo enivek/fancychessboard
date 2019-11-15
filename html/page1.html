@@ -4,12 +4,16 @@
     <script src="https://unpkg.com/konva@4.0.17/konva.js"></script>
     <script src="../dist/app.js"></script>
     <script>
-        var fcb = null;
-        function afterImagesLoaded() {
-            fcb.fen();
-        }
         function init() {
-            fcb = FancyChessBoard.initialize("demoCanvas", "http://localhost:8080/fancychessboard/assets", afterImagesLoaded);
+            var fcb = null;
+            
+            function afterImagesLoaded() {
+                fcb.fen('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1');
+            }
+
+            var config = new FancyChessBoardConfig("demoCanvas");
+            config.onAssetsLoaded = afterImagesLoaded;
+            fcb = FancyChessBoard.initialize(config);
         }
     </script>
 </head>

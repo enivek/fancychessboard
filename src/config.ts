@@ -32,6 +32,39 @@ export class ChessBoardViewConfig implements Konva.ContainerConfig {
 
 }
 
-console.log("Chessboard config");
+export class FancyChessBoardConfig {
 
-export default ChessBoardViewConfig;
+    private _assetRoot = "../assets";
+    private _onAssetsLoaded: Function;
+    private _containerId: string;
+
+    constructor( containerId: string ) {
+        if ( !containerId ) {
+            throw new Error("No container id");
+        } else {
+            this._containerId = containerId;
+        }
+    }
+
+    set assetRoot(value: string) {
+        this._assetRoot = value;
+    }
+
+    get assetRoot() {
+        return this._assetRoot;
+    }
+
+    get containerId() {
+        return this._containerId;
+    }
+
+    set onAssetsLoaded(value: Function) {
+        this._onAssetsLoaded = value;
+    }
+
+    get onAssetsLoaded() {
+        return this._onAssetsLoaded;
+    }
+
+}
+

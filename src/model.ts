@@ -1,5 +1,19 @@
-import { Color, Piece } from "../constants";
-import { Coordinate } from "./coordinate";
+import { Color, Piece } from "./constants";
+import { Coordinate } from "./common";
+
+export class ChessBoard {
+
+    private _listOfPieces: Array<ChessPiece> = [];
+
+    set listOfPieces(value: Array<ChessPiece>) {
+        this._listOfPieces = value;
+    }
+
+    get listOfPieces() {
+        return this._listOfPieces;
+    }
+
+}
 
 export class ChessPiece {
 
@@ -25,9 +39,9 @@ export class ChessPiece {
     private _piece: Piece;
     private _id: number;
 
-    public constructor(color: Color, piece: Piece, coordinate: Coordinate) {
-        this._color = color;
-        this._piece = piece;
+    public constructor(color: string, piece: string, coordinate: Coordinate) {
+        this._color = <Color> color.toLowerCase();
+        this._piece = <Piece> piece.toLowerCase();
         this._coordinte = coordinate;
         this._id = ChessPiece.maxId + 1;
         ChessPiece.maxId += 1;
@@ -42,5 +56,3 @@ export class ChessPiece {
     }
 
 }
-
-export default ChessPiece;

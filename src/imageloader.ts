@@ -1,5 +1,3 @@
-import logger = require("fancy-log");
-
 export class ImageLoader {
 
     private static _intervalInMilliseconds = 100;
